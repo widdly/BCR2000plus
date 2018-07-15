@@ -37,3 +37,5 @@ Mac: The Remote Script folder is inside the Ableton Live application bundle. Loc
 After you restart Live, you should see the BCR2000plus in Preferences/Link Midi/Control Surfaces.
 
 There is file called preset.syx you need to send to your BCR2000.  Ideally you could press the "dump" button in the Live GUI but I've found it cannot transfer the whole file properly so I recommend you use the Elektron C6 utility from here.. https://www.elektron.se/support/?connection=analog-four    You will need to add a delay in the configure page of about 10ms for it to work properly with the BCR2000
+
+This script is based on the https://github.com/j74/Generic-Python-Remote-Script by Fabrizio Poce
