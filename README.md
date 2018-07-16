@@ -19,11 +19,11 @@ The top row of encoders have 4 groups of functions.  The different functions are
 
 Group 1 has encoders controlling pans, and pushbutton sets Solo.
 
-Group 2 has device control (the blue hand) encoders and the pushbuttons select between of 8 banks device controls.  The "edit" and "exit" buttons also scroll through the device control banks.  The "Store" and "LEarn" buttons scroll through plugins.
+Group 2 has device control (the blue hand) encoders and the pushbuttons select between of 8 banks device controls.  The "Edit" and "Exit" buttons also scroll through the device control banks.  The "Store" and "Learn" buttons scroll through plugins.
 
 Group 3 has Crossfader on encoder 6, Headphones on 7 and Master Volume on 8.  The push buttons select tracks.
 
-Group 4 has Send 3 levels and the encoders stop the clips for that track.
+Group 4 has Send 3 levels and the pushbuttons stop the clips for that track.
 
 The buttons on the lower right move the rectangle left and right, selecting a different set of 8 channels.  It is possible to control the return channels as well as the normal channels.  The two buttons above operate the Play and Stop transport.
 
