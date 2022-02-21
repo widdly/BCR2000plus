@@ -1,10 +1,11 @@
+from __future__ import absolute_import, print_function, unicode_literals
 import Live
 from _Framework.ControlSurfaceComponent import ControlSurfaceComponent
 from _Framework.ButtonElement import ButtonElement
 SHOW_PLAYING_CLIP_DELAY = 5
 class DetailViewControllerComponent(ControlSurfaceComponent):
     __module__ = __name__
-    __doc__ = ' Component that can toggle the device chain- and clip view of the selected track '
+    __doc__ = u' Component that can toggle the device chain- and clip view of the selected track '
 
     def __init__(self):
         ControlSurfaceComponent.__init__(self)
@@ -13,13 +14,13 @@ class DetailViewControllerComponent(ControlSurfaceComponent):
         self._left_button = None
         self._right_button = None
         self._show_playing_clip_ticks_delay = -1
-        self.application().view.add_is_view_visible_listener('Detail', self._detail_view_visibility_changed)
+        self.application().view.add_is_view_visible_listener(u'Detail', self._detail_view_visibility_changed)
         self._register_timer_callback(self._on_timer)
         return None
 
     def disconnect(self):
         self._unregister_timer_callback(self._on_timer)
-        self.application().view.remove_is_view_visible_listener('Detail', self._detail_view_visibility_changed)
+        self.application().view.remove_is_view_visible_listener(u'Detail', self._detail_view_visibility_changed)
         if self._device_clip_toggle_button != None:
             self._device_clip_toggle_button.remove_value_listener(self._device_clip_toggle_value)
             self._device_clip_toggle_button = None
@@ -94,11 +95,11 @@ class DetailViewControllerComponent(ControlSurfaceComponent):
 
     def _detail_view_visibility_changed(self):
         if self.is_enabled() and self._detail_toggle_button != None:
-            if self.application().view.is_view_visible('Detail'):
-                self.application().view.is_view_visible('Detail')
+            if self.application().view.is_view_visible(u'Detail'):
+                self.application().view.is_view_visible(u'Detail')
                 self._detail_toggle_button.turn_on()
             else:
-                self.application().view.is_view_visible('Detail')
+                self.application().view.is_view_visible(u'Detail')
                 self._detail_toggle_button.turn_off()
         else:
             self.is_enabled()
@@ -113,17 +114,17 @@ class DetailViewControllerComponent(ControlSurfaceComponent):
             button_is_momentary = self._device_clip_toggle_button.is_momentary()
             if not button_is_momentary or value != 0:
                 not button_is_momentary
-                if not self.application().view.is_view_visible('Detail'):
-                    self.application().view.is_view_visible('Detail')
-                    self.application().view.show_view('Detail')
+                if not self.application().view.is_view_visible(u'Detail'):
+                    self.application().view.is_view_visible(u'Detail')
+                    self.application().view.show_view(u'Detail')
                 else:
-                    self.application().view.is_view_visible('Detail')
-                if not self.application().view.is_view_visible('Detail/DeviceChain'):
-                    self.application().view.is_view_visible('Detail/DeviceChain')
-                    self.application().view.show_view('Detail/DeviceChain')
+                    self.application().view.is_view_visible(u'Detail')
+                if not self.application().view.is_view_visible(u'Detail/DeviceChain'):
+                    self.application().view.is_view_visible(u'Detail/DeviceChain')
+                    self.application().view.show_view(u'Detail/DeviceChain')
                 else:
-                    self.application().view.is_view_visible('Detail/DeviceChain')
-                    self.application().view.show_view('Detail/Clip')
+                    self.application().view.is_view_visible(u'Detail/DeviceChain')
+                    self.application().view.show_view(u'Detail/Clip')
             if button_is_momentary and value != 0:
                 self._show_playing_clip_ticks_delay = SHOW_PLAYING_CLIP_DELAY
             else:
@@ -139,10 +140,10 @@ class DetailViewControllerComponent(ControlSurfaceComponent):
         assert (value in range(128))
         if self.is_enabled():
             if ((not self._detail_toggle_button.is_momentary()) or (value != 0)):
-                if (not self.application().view.is_view_visible('Detail')):
-                    self.application().view.show_view('Detail')
+                if (not self.application().view.is_view_visible(u'Detail')):
+                    self.application().view.show_view(u'Detail')
                 else:
-                    self.application().view.hide_view('Detail')
+                    self.application().view.hide_view(u'Detail')
 
 
     def _nav_value(self, value, sender):
@@ -151,14 +152,14 @@ class DetailViewControllerComponent(ControlSurfaceComponent):
         if self.is_enabled():
             if ((not sender.is_momentary()) or (value != 0)):
                 modifier_pressed = True
-                if ((not self.application().view.is_view_visible('Detail')) or (not self.application().view.is_view_visible('Detail/DeviceChain'))):
-                    self.application().view.show_view('Detail')
-                    self.application().view.show_view('Detail/DeviceChain')
+                if ((not self.application().view.is_view_visible(u'Detail')) or (not self.application().view.is_view_visible(u'Detail/DeviceChain'))):
+                    self.application().view.show_view(u'Detail')
+                    self.application().view.show_view(u'Detail/DeviceChain')
                 else:
                     direction = Live.Application.Application.View.NavDirection.left
                     if (sender == self._right_button):
                         direction = Live.Application.Application.View.NavDirection.right
-                    self.application().view.scroll_view(direction, 'Detail/DeviceChain', (not modifier_pressed))
+                    self.application().view.scroll_view(direction, u'Detail/DeviceChain', (not modifier_pressed))
 
     def _on_timer(self):
         if self.is_enabled():
@@ -169,5 +170,5 @@ class DetailViewControllerComponent(ControlSurfaceComponent):
                     if (playing_slot_index > -1):
                         song.view.selected_scene = song.scenes[playing_slot_index]
                         if song.view.highlighted_clip_slot.has_clip:
-                            self.application().view.show_view('Detail/Clip')
+                            self.application().view.show_view(u'Detail/Clip')
                 self._show_playing_clip_ticks_delay -= 1

@@ -1,8 +1,9 @@
+from __future__ import absolute_import, print_function, unicode_literals
 import Live
 from _Framework.SessionZoomingComponent import SessionZoomingComponent
 from _Framework.ButtonElement import ButtonElement
 class SpecialZoomingComponent(SessionZoomingComponent):
-    ' Special ZoomingComponent that uses clip stop buttons for stop all when zoomed '
+    u' Special ZoomingComponent that uses clip stop buttons for stop all when zoomed '
     __module__ = __name__
 
     def __init__(self, session):

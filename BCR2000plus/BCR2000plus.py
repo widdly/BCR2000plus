@@ -1,4 +1,4 @@
-from __future__ import with_statement
+from __future__ import absolute_import, print_function, unicode_literals, with_statement
 
 import Live
 from _Framework.ControlSurface import ControlSurface
@@ -10,15 +10,15 @@ from _Framework.ChannelStripComponent import ChannelStripComponent
 from _Framework.DeviceComponent import DeviceComponent
 from _Framework.ControlSurfaceComponent import ControlSurfaceComponent
 from _Framework.SessionZoomingComponent import SessionZoomingComponent
-from SpecialMixerComponent import SpecialMixerComponent
-from SpecialTransportComponent import SpecialTransportComponent
-from SpecialSessionComponent import SpecialSessionComponent
-from SpecialZoomingComponent import SpecialZoomingComponent
-from SpecialViewControllerComponent import DetailViewControllerComponent
-from MIDI_Map import *
+from .SpecialMixerComponent import SpecialMixerComponent
+from .SpecialTransportComponent import SpecialTransportComponent
+from .SpecialSessionComponent import SpecialSessionComponent
+from .SpecialZoomingComponent import SpecialZoomingComponent
+from .SpecialViewControllerComponent import DetailViewControllerComponent
+from .MIDI_Map import *
 
 class BCR2000plus(ControlSurface):
-    __doc__ = " Script for FCB1010 in APC emulation mode "
+    __doc__ = u" Script for FCB1010 in APC emulation mode "
 
     _active_instances = []
     def _combine_active_instances():
@@ -109,7 +109,7 @@ class BCR2000plus(ControlSurface):
     def _setup_session_control(self):
         is_momentary = True
         self._session = SpecialSessionComponent(TRACK_NUMBER, MATRIX_DEPTH)
-        self._session.name = 'Session_Control'
+        self._session.name = u'Session_Control'
         self._session.set_track_bank_buttons(self._note_map_buttons[25], self._note_map_buttons[24])
         self._session.set_scene_bank_buttons(self._note_map_buttons[27], self._note_map_buttons[26])
         self._session.set_select_buttons(self._note_map_buttons[34], self._note_map_buttons[35])
@@ -117,12 +117,12 @@ class BCR2000plus(ControlSurface):
         self._track_stop_buttons = [self._note_map_trk_stop_buttons[index] for index in range(TRACK_NUMBER) ]
         self._session.set_stop_all_clips_button(self._note_map_buttons[38])
         self._session.set_stop_track_clip_buttons(tuple(self._track_stop_buttons))
-        self._session.selected_scene().name = 'Selected_Scene'
+        self._session.selected_scene().name = u'Selected_Scene'
         self._session.selected_scene().set_launch_button(self._note_map_buttons[36])
         self._session.set_slot_launch_button(self._note_map_buttons[37])
         for scene_index in range(MATRIX_DEPTH):
             scene = self._session.scene(scene_index)
-            scene.name = 'Scene_' + str(scene_index)
+            scene.name = u'Scene_' + str(scene_index)
             button_row = []
             scene.set_launch_button(self._scene_launch_buttons[scene_index])
             scene.set_triggered_value(2)
@@ -133,26 +133,26 @@ class BCR2000plus(ControlSurface):
                     button = ButtonElement(is_momentary, CLIPNOTEMAP_TYPE[scene_index][track_index], CLIPNOTEMAP_CH[scene_index][track_index], CLIPNOTEMAP[scene_index][track_index])
                 button_row.append(button)
                 clip_slot = scene.clip_slot(track_index)
-                clip_slot.name = str(track_index) + '_Clip_Slot_' + str(scene_index)
+                clip_slot.name = str(track_index) + u'_Clip_Slot_' + str(scene_index)
                 clip_slot.set_launch_button(button)
         self._session_zoom = SpecialZoomingComponent(self._session)
-        self._session_zoom.name = 'Session_Overview'
+        self._session_zoom.name = u'Session_Overview'
         self._session_zoom.set_nav_buttons(self._note_map_buttons[28], self._note_map_buttons[29], self._note_map_buttons[30], self._note_map_buttons[31])
 
     def _setup_mixer_control(self):
         is_momentary = True
         self._mixer = SpecialMixerComponent(TRACK_NUMBER)
-        self._mixer.name = 'Mixer'
-        self._mixer.master_strip().name = 'Master_Channel_Strip'
+        self._mixer.name = u'Mixer'
+        self._mixer.master_strip().name = u'Master_Channel_Strip'
         self._mixer.master_strip().set_select_button(self._note_map_buttons[39])
-        self._mixer.selected_strip().name = 'Selected_Channel_Strip'
+        self._mixer.selected_strip().name = u'Selected_Channel_Strip'
         self._mixer.set_select_buttons(self._note_map_buttons[33], self._note_map_buttons[32])
         self._mixer.set_crossfader_control(self._ctrl_map_sliders[2])
         self._mixer.set_prehear_volume_control(self._ctrl_map_sliders[1])
         self._mixer.master_strip().set_volume_control(self._ctrl_map_sliders[0])
         for track in range(TRACK_NUMBER):
             strip = self._mixer.channel_strip(track)
-            strip.name = 'Channel_Strip_' + str(track)
+            strip.name = u'Channel_Strip_' + str(track)
             strip.set_arm_button(self._note_map_trk_rec_buttons[track])
             strip.set_solo_button(self._note_map_trk_solo_buttons[track])
             strip.set_mute_button(self._note_map_trk_mute_buttons[track])
@@ -166,7 +166,7 @@ class BCR2000plus(ControlSurface):
     def _setup_device_and_transport_control(self):
         is_momentary = True
         self._device = DeviceComponent()
-        self._device.name = 'Device_Component'
+        self._device.name = u'Device_Component'
         device_bank_buttons = []
         device_param_controls = []
         for index in range(PARAMS_NUMBER):
@@ -183,13 +183,13 @@ class BCR2000plus(ControlSurface):
         self.set_device_component(self._device)
 
         detail_view_toggler = DetailViewControllerComponent()
-        detail_view_toggler.name = 'Detail_View_Control'
+        detail_view_toggler.name = u'Detail_View_Control'
         detail_view_toggler.set_device_clip_toggle_button(self._note_map_buttons[15])
         detail_view_toggler.set_detail_toggle_button(self._note_map_buttons[14])
         detail_view_toggler.set_device_nav_buttons(self._note_map_buttons[18], self._note_map_buttons[19] )
 
         transport = SpecialTransportComponent()
-        transport.name = 'Transport'
+        transport.name = u'Transport'
         transport.set_play_button(self._note_map_buttons[0])
         transport.set_stop_button(self._note_map_buttons[1])
         transport.set_record_button(self._note_map_buttons[2])
@@ -235,7 +235,7 @@ class BCR2000plus(ControlSurface):
                 button = None
             else:
                 button = ButtonElement(is_momentary, SCENELAUNCH_TYPE[scene_id], SCENELAUNCH_CH[scene_id], SCENELAUNCH[scene_id])
-                button.name = 'Scene_' + str(scene_id)
+                button.name = u'Scene_' + str(scene_id)
             self._note_map_scenes.append(button)
         # BUTTON_VECTOR Buttons
         for button_id in range(NUMBER_BUTTONS):
@@ -246,7 +246,7 @@ class BCR2000plus(ControlSurface):
                     button = ButtonElement(False, BUTTON_VECTOR_TYPE[button_id], BUTTON_VECTOR_CH[button_id], BUTTON_VECTOR[button_id])
                 else:
                     button = ButtonElement(is_momentary, BUTTON_VECTOR_TYPE[button_id], BUTTON_VECTOR_CH[button_id], BUTTON_VECTOR[button_id])
-                button.name = 'Global_Button_' + str(button_id)
+                button.name = u'Global_Button_' + str(button_id)
             self._note_map_buttons.append(button)
         # SLIDER_VECTOR Sliders
         for slider_id in range(NUMBER_SLIDERS):
@@ -254,7 +254,7 @@ class BCR2000plus(ControlSurface):
                 control = None
             else:
                 control = SliderElement(MIDI_CC_TYPE, SLIDER_VECTOR_CH[slider_id], SLIDER_VECTOR[slider_id])
-                control.name = 'Global_Slider_' + str(slider_id)
+                control.name = u'Global_Slider_' + str(slider_id)
             self._ctrl_map_sliders.append(control)
         # TRACKSTOP Buttons
         for track_id in range(TRACK_NUMBER):
@@ -262,7 +262,7 @@ class BCR2000plus(ControlSurface):
                 button = None
             else:
                 button = ButtonElement(is_momentary, TRACKSTOP_TYPE[track_id], TRACKSTOP_CH[track_id], TRACKSTOP[track_id])
-                button.name = 'Trk_Stop_Button_' + str(track_id)
+                button.name = u'Trk_Stop_Button_' + str(track_id)
             self._note_map_trk_stop_buttons.append(button)
         # TRACKSEL Buttons
         for track_id in range(TRACK_NUMBER):
@@ -270,7 +270,7 @@ class BCR2000plus(ControlSurface):
                 button = None
             else:
                 button = ButtonElement(is_momentary, TRACKSEL_TYPE[track_id], TRACKSEL_CH[track_id], TRACKSEL[track_id])
-                button.name = 'Trk_Sel_Button_' + str(track_id)
+                button.name = u'Trk_Sel_Button_' + str(track_id)
             self._note_map_trk_sel_buttons.append(button)
         # TRACKMUTE Buttons
         for track_id in range(TRACK_NUMBER):
@@ -278,7 +278,7 @@ class BCR2000plus(ControlSurface):
                 button = None
             else:
                 button = ButtonElement(False, TRACKMUTE_TYPE[track_id], TRACKMUTE_CH[track_id], TRACKMUTE[track_id])
-                button.name = 'Trk_Mute_Button_' + str(track_id)
+                button.name = u'Trk_Mute_Button_' + str(track_id)
             self._note_map_trk_mute_buttons.append(button)			
         # TRACKSOLO Buttons
         for track_id in range(TRACK_NUMBER):
@@ -286,7 +286,7 @@ class BCR2000plus(ControlSurface):
                 button = None
             else:
                 button = ButtonElement(is_momentary, TRACKSOLO_TYPE[track_id], TRACKSOLO_CH[track_id], TRACKSOLO[track_id])
-                button.name = 'Trk_Solo_Button_' + str(track_id)
+                button.name = u'Trk_Solo_Button_' + str(track_id)
             self._note_map_trk_solo_buttons.append(button)	
         # TRACKREC Buttons
         for track_id in range(TRACK_NUMBER):
@@ -294,7 +294,7 @@ class BCR2000plus(ControlSurface):
                 button = None
             else:
                 button = ButtonElement(False, TRACKREC_TYPE[track_id], TRACKREC_CH[track_id], TRACKREC[track_id])
-                button.name = 'Trk_Rec_Button_' + str(track_id)
+                button.name = u'Trk_Rec_Button_' + str(track_id)
             self._note_map_trk_rec_buttons.append(button)	
         # TRACKVOL Sliders
         for track_id in range(TRACK_NUMBER):
@@ -302,7 +302,7 @@ class BCR2000plus(ControlSurface):
                 control = None
             else:
                 control = SliderElement(MIDI_CC_TYPE, TRACKVOL_CH[track_id], TRACKVOL[track_id])
-                control.name = 'Trk_Vol_Slider_' + str(track_id)
+                control.name = u'Trk_Vol_Slider_' + str(track_id)
             self._ctrl_map_trk_volume.append(control)
         # TRACKPAN Sliders
         for track_id in range(TRACK_NUMBER):
@@ -310,7 +310,7 @@ class BCR2000plus(ControlSurface):
                 control = None
             else:
                 control = SliderElement(MIDI_CC_TYPE, TRACKPAN_CH[track_id], TRACKPAN[track_id])
-                control.name = 'Trk_Pan_Slider_' + str(track_id)
+                control.name = u'Trk_Pan_Slider_' + str(track_id)
             self._ctrl_map_trk_pan.append(control)
         # TRACKSENDA Sliders
         for track_id in range(TRACK_NUMBER):
@@ -318,7 +318,7 @@ class BCR2000plus(ControlSurface):
                 control = None
             else:
                 control = SliderElement(MIDI_CC_TYPE, TRACKSENDA_CH[track_id], TRACKSENDA[track_id])
-                control.name = 'Trk_SendA_Slider_' + str(track_id)
+                control.name = u'Trk_SendA_Slider_' + str(track_id)
             self._ctrl_map_senda.append(control)
         # TRACKSENDB Sliders
         for track_id in range(TRACK_NUMBER):
@@ -326,7 +326,7 @@ class BCR2000plus(ControlSurface):
                 control = None
             else:
                 control = SliderElement(MIDI_CC_TYPE, TRACKSENDB_CH[track_id], TRACKSENDB[track_id])
-                control.name = 'Trk_SendB_Slider_' + str(track_id)
+                control.name = u'Trk_SendB_Slider_' + str(track_id)
             self._ctrl_map_sendb.append(control)
         # TRACKSENDC Sliders
         for track_id in range(TRACK_NUMBER):
@@ -334,7 +334,7 @@ class BCR2000plus(ControlSurface):
                 control = None
             else:
                 control = SliderElement(MIDI_CC_TYPE, TRACKSENDC_CH[track_id], TRACKSENDC[track_id])
-                control.name = 'Trk_SendC_Slider_' + str(track_id)
+                control.name = u'Trk_SendC_Slider_' + str(track_id)
             self._ctrl_map_sendc.append(control)
         # DEVICEBANK Buttons
         for bank_id in range(BANKS_NUMBER):
@@ -342,7 +342,7 @@ class BCR2000plus(ControlSurface):
                 button = None
             else:
                 button = ButtonElement(is_momentary, DEVICEBANK_TYPE[bank_id], DEVICEBANK_CH[bank_id], DEVICEBANK[bank_id])
-                button.name = 'Bank_Button_' + str(bank_id)
+                button.name = u'Bank_Button_' + str(bank_id)
             self._note_map_bank_buttons.append(button)
         # PARAMCONTROL Sliders
         for param_id in range(PARAMS_NUMBER):
@@ -350,5 +350,5 @@ class BCR2000plus(ControlSurface):
                 control = None
             else:
                 control = SliderElement(MIDI_CC_TYPE, PARAMCONTROL_CH[param_id], PARAMCONTROL[param_id])
-                control.name = 'Slider_Param_' + str(param_id)
+                control.name = u'Slider_Param_' + str(param_id)
             self._ctrl_map_parameter.append(control)
