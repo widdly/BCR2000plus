@@ -1,7 +1,8 @@
+from __future__ import absolute_import, print_function, unicode_literals
 from _Framework.MixerComponent import MixerComponent
-from SpecialChannelStripComponent import SpecialChannelStripComponent
+from .SpecialChannelStripComponent import SpecialChannelStripComponent
 class SpecialMixerComponent(MixerComponent):
-    ' Special mixer class that uses return tracks alongside midi and audio tracks '
+    u' Special mixer class that uses return tracks alongside midi and audio tracks '
     __module__ = __name__
 
     def __init__(self, num_tracks):

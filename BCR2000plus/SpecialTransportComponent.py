@@ -1,13 +1,14 @@
+from __future__ import absolute_import, print_function, unicode_literals
 import Live
 from _Framework.TransportComponent import TransportComponent
 from _Framework.ButtonElement import ButtonElement
 from _Framework.EncoderElement import EncoderElement 
 from _Framework.SubjectSlot import subject_slot 
 
-from MIDI_Map import TEMPO_TOP
-from MIDI_Map import TEMPO_BOTTOM
+from .MIDI_Map import TEMPO_TOP
+from .MIDI_Map import TEMPO_BOTTOM
 class SpecialTransportComponent(TransportComponent):
-    __doc__ = ' TransportComponent that only uses certain buttons if a shift button is pressed '
+    __doc__ = u' TransportComponent that only uses certain buttons if a shift button is pressed '
     def __init__(self):
         TransportComponent.__init__(self)
         self._quant_toggle_button = None

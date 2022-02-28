@@ -1,8 +1,9 @@
+from __future__ import absolute_import, print_function, unicode_literals
 import Live
 from _Framework.SessionComponent import SessionComponent
 from _Framework.ButtonElement import ButtonElement
 class SpecialSessionComponent(SessionComponent):
-    " Special SessionComponent for APC combination mode and button to fire selected clip slot "
+    u" Special SessionComponent for APC combination mode and button to fire selected clip slot "
     __module__ = __name__
 
     def __init__(self, num_tracks, num_scenes):
